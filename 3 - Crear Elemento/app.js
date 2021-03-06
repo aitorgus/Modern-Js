@@ -14,4 +14,4 @@ const arrayElement = ['1º Elemento', '2º Elemento', '3º Elemento']
 arrayElement.forEach(item => {
     lista.innerHTML  +=`<li>${item}</li> ` //Concatenamos
 }); //Inserta etiquetas html, en la cual va un item que va cambiando conforme avanza el bucle foreach con el contenido
-//del array que hemos declardo más arriba
+//del array que hemos declardo más arriba 
