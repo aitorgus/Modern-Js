@@ -4,13 +4,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Template</title>
 </head>
 <body>
     <h1>Hola al DOM</h1>
-    <ul id="lista">
 
-    </ul>
-    <script src="app.js"></script>
+   <ul id="lista"> 
+       
+   </ul>
+
+  <!--Lo contenido en template no será renderizado en nuestro sitio web-->
+   <template id="template-li">
+  
+
+    <li class="list">
+     <b>nombre: </b> <span class="text-danger">${item}</span>
+ </li>
+ 
+</template>
+ 
+
+    <script src="app2.js"></script>
 </body>
 </html>
