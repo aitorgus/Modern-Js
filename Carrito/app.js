@@ -96,10 +96,36 @@ const pintarCarrito = () => {
         //Existen varios td, por lo que indicamos que queremos acceder al primero (el 0)
         templateCarrito.querySelector('.btn-info').dataset.id = producto.id //Botón agregar
         templateCarrito.querySelector('.btn-danger').dataset.id = producto.id //Botón de borrar
-        templateFooter.querySelector('span').textContent = producto.cantidad*producto.precio
+        templateCarrito.querySelector('span').textContent = producto.cantidad * producto.precio
 
         const clone = templateCarrito.cloneNode(true)
         fragment.appendChild(clone)
     })
     items.appendChild(fragment)
+
+    pintarFooter()
+}
+
+const pintarFooter = () => {
+    footer.innerHTML = '' //Lo dejamos vacio para que no se sobreescriba
+    if(Object.keys(carrito).length ===0){
+        //Si el carrito está vacio entonces escribimos lo siguiente con el método innerHTML
+        footer.innerHTML = ` <th scope="row" colspan="5">Carrito vacío - comience a comprar!</th>`
+    }
+    //En caso de que no esté vacio el carrito, tenemos que pintar los productos
+
+
+    //nCantidad es la cantidad total de producto (de todos los tipos)
+    // sumar cantidad y sumar Precios totales
+    const nCantidad = Object.values(carrito).reduce((acc, { cantidad }) => acc + cantidad, 0)
+    const nPrecio = Object.values(carrito).reduce((acc, {cantidad, precio}) => acc + cantidad * precio ,0)
+    // console.log(nPrecio)
+
+    templateFooter.querySelectorAll('td')[0].textContent = nCantidad
+    templateFooter.querySelector('span').textContent = nPrecio
+
+    const clone = templateFooter.cloneNode(true)
+    fragment.appendChild(clone)
+
+    footer.appendChild(fragment)
 }
