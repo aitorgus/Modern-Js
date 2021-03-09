@@ -26,6 +26,10 @@ const pintarCards = data => {
         //Recordemos que data es lo que me devuelve el JSON, con forEach, estoy recorriendo el contenido cargado desde JSON a la variable data
         templateCard.getElementById('titulo-h5').textContent = producto.title
         //Queremos seleccionar el título, una buena práctica sería darle un ID  Estamos parseando el título del template con el título del json
+        templateCard.getElementById('parrafo-precio').textContent = producto.precio
+
+        templateCard.querySelector('.img-card-top').setAttribute('src',producto.thumbnailUrl)
+        //Establece el valor de un atributo en el elemento indicado. Si el atributo ya existe, el valor es actualizado, en caso contrario, el nuevo atributo es añadido con el nombre y valor indicado.
        
         const clone =templateCard.cloneNode(true)
         fragment.appendChild(clone) //El fragment se guarda en memoria volátil y se borra al pintarse
