@@ -22,9 +22,28 @@
     <button class="btn btn-danger">Disminuir</button>
 
         <h4 class="my-5">Contador: <span id="span">0</span></h4>
+
+        <div class="bg-success py-5">
+            <button class="btn btn-dark">Dame click </button>
+        </div>
 </div>
     
     <script>
+
+        const btn= document.querySelector('.btn-dark')
+        const bgSuccess = document.querySelector('.bg-success')
+
+        btn.addEventListener('click', (e) =>{
+            console.log('click boton')
+            e.stopPropagation
+        })
+
+        bgSuccess.addEventListener('click', () =>{
+            console.log('BgSuccess')
+        })
+
+
+
         //Event Delegation
         const container =document.querySelector('.container')
         const span =document.getElementById('span')
