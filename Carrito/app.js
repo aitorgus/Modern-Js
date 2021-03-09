@@ -14,6 +14,10 @@ let carrito = { } //Creamos un objeto vacío
 //Como tenemos que esperar a que se lea primero todo nuestro HTML, para ello llamamos al evento DOMContentLoadedEl evento DOMContentLoaded es disparado cuando el documento HTML ha sido completamente cargado y parseado, sin esperar hojas de estilo, images y subframes para  finalizar la carga
 document.addEventListener('DOMContentLoaded', () => {
     fetchData()
+    if(localStorage.getItem('carrito')){
+        carrito = JSON.parse(localStorage.getItem('carrito'))
+        pintarCarrito()
+    }
 })
 //En otra práctica aquí usábamos el evento click del ratón
 cards.addEventListener('click', (eventoClick) => {
@@ -21,11 +25,14 @@ cards.addEventListener('click', (eventoClick) => {
 
 
 })
+items.addEventListener('click', eventoClick => { btnAccion(eventoClick) })
+
+
 // Traer productos deL JSON
 
 const fetchData = async () => {
     try {
-        //usamos el await porque tenemos que esperar a que lo lea
+        //usamos el await porque tenemos que esperar a que lea el JSON
         const res= await fetch('api.json') 
         const data = await res.json()
         pintarCards(data)
@@ -87,7 +94,7 @@ const setCarrito = objeto => {
 }
 
 const pintarCarrito = () => {
-    //console.log(carrito)
+   
     items.innerHTML= ''
     Object.values(carrito).forEach(producto => {
         templateCarrito.querySelector('th').textContent = producto.id
@@ -104,6 +111,11 @@ const pintarCarrito = () => {
     items.appendChild(fragment)
 
     pintarFooter()
+
+
+    //Guardar INFO
+
+    localStorage.setItem('carrito', JSON.stringify(carrito))
 }
 
 const pintarFooter = () => {
@@ -111,6 +123,8 @@ const pintarFooter = () => {
     if(Object.keys(carrito).length ===0){
         //Si el carrito está vacio entonces escribimos lo siguiente con el método innerHTML
         footer.innerHTML = ` <th scope="row" colspan="5">Carrito vacío - comience a comprar!</th>`
+
+        return //Si el carrito está vacio, no continua ejecutándose el código hacia abajo
     }
     //En caso de que no esté vacio el carrito, tenemos que pintar los productos
 
@@ -128,4 +142,35 @@ const pintarFooter = () => {
     fragment.appendChild(clone)
 
     footer.appendChild(fragment)
+
+    const btnVaciar = document.getElementById('vaciar-carrito')
+    btnVaciar.addEventListener('click', () => {
+        carrito = {
+            //Estoy vaciando el carrito
+        }
+        pintarCarrito()
+    })
+}
+
+const btnAccion = eventoClick => {
+    //Acción aumentar producto
+    if (eventoClick.target.classList.contains('btn-info'))
+    {
+        const producto=carrito[eventoClick.target.dataset.id]
+        producto.cantidad++
+        carrito[eventoClick.target.dataset.id] = { ...producto }
+        pintarCarrito()
+    }
+
+    if (eventoClick.target.classList.contains('btn-danger'))
+    {
+        const producto=carrito[eventoClick.target.dataset.id]
+        producto.cantidad--
+        if(producto.cantidad ===0){
+            delete  carrito[eventoClick.target.dataset.id]
+        }
+        pintarCarrito()
+        
+    }
+    eventoClick.stopPropagation()
 }
