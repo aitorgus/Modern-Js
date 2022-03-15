@@ -7,3 +7,4 @@ console.log(nombrecomleto);
 //El nombre de una variable no puede empezar por un número.
 
 //No podemos usar las palabras reservadas como variable.
+
